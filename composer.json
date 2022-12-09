@@ -1,0 +1,14 @@
+{
+    "name": "bviguier/php-fk",
+    "require-dev": {
+        "phpunit/phpunit": "^9.5"
+    },
+    "autoload": {
+        "files": [
+            "src/PhpFk.php"
+        ]
+    },
+    "require": {
+        "php": "^8.2"
+    }
+}
