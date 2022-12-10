@@ -8,7 +8,7 @@ final class PhpFkTest extends TestCase
 {
     private function assertValidString(string $str): void
     {
-        $this->assertMatchesRegularExpression('/^[\[\],\(\).+^!\']*$/', $str);
+        $this->assertMatchesRegularExpression('/^[\[\],\(\).^\'C]*$/', $str);
     }
 
     /**
@@ -21,7 +21,7 @@ final class PhpFkTest extends TestCase
 
         $result = eval("return $obfuscatedStr;");
 
-        $this->assertSame($nb, $result);
+        $this->assertEquals("$nb", $result);
     }
 
     public function positiveIntegerProvider(): iterable
@@ -29,7 +29,7 @@ final class PhpFkTest extends TestCase
         for ($i = 0; $i < 10; ++$i) {
             yield "$i" => [$i];
         }
-        foreach([42, 111, 1024] as $i) {
+        foreach ([42, 111, 1024] as $i) {
             yield "$i" => [$i];
         }
     }
@@ -46,6 +46,7 @@ final class PhpFkTest extends TestCase
 
         $this->assertSame($str, $result);
     }
+
     public function stringProvider(): iterable
     {
         yield 'empty' => [''];
@@ -70,7 +71,7 @@ final class PhpFkTest extends TestCase
 
     public function codeProvider(): iterable
     {
-        yield 'Hello' => ['echo "Hello World"; return 4;', 4, 'Hello World'];
+        yield 'Hello' => ['echo "Hello World"; return 0;', 0, 'Hello World'];
 
         yield 'Class' => [
             'echo (new class() {public function __toString(): string {return "My Class";}});',
