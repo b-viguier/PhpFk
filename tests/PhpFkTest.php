@@ -8,7 +8,7 @@ final class PhpFkTest extends TestCase
 {
     private function assertValidString(string $str): void
     {
-        $this->assertMatchesRegularExpression('/^[\[\],\(\).^\'C]*$/', $str);
+        $this->assertMatchesRegularExpression('/^[\[\],\(\).^\']*$/', $str);
     }
 
     /**
