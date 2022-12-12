@@ -1,8 +1,7 @@
 ---
 layout: page
+title: What is the minimum number of characters needed to run every possible program in Php?
 ---
-
-# What is the minimum number of characters needed to run every possible program in Php?
 
 This is just the kind of question that I love: short, simple to understand... but damn challenging!
 This question already led to the creation of the [brainfuck](https://en.wikipedia.org/wiki/Brainfuck) language,
@@ -146,7 +145,7 @@ Our final set of 8 characters is `[(,.^')]`, but... how can we _XOR_ some new ch
 ### Retrieving the lost characters
 We still can _XOR_ some combinations from `[(,.^)]` characters: `pqrstuvwXYZ`
 Notice that `chr0123456789` are missing.
-Have upper/lower case is not an issue, because [function names are case-insensitive in PHP](https://www.php.net/manual/en/functions.user-defined.php).
+Having upper/lower case characters is not an issue, because [function names are case-insensitive in PHP](https://www.php.net/manual/en/functions.user-defined.php).
 Our last chance is to find a way to generate a new character, by calling some functions with characters above.
 * [`sqrt`](https://www.php.net/manual/en/function.sqrt) can produce a number, and numbers can easily be converted to string.
   That's a good idea, but how to produce an input number for the function?
