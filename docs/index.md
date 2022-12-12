@@ -1,6 +1,7 @@
 ---
-layout: page
+layout: post
 title: What is the minimum number of characters needed to run every possible program in Php?
+date: Dec. 12th, 2022
 ---
 
 This is just the kind of question that I love: short, simple to understand... but damn challenging!
