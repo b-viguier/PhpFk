@@ -8,7 +8,7 @@ This is just the kind of question that I love: short, simple to understand... bu
 This question already led to the creation of the [brainfuck](https://en.wikipedia.org/wiki/Brainfuck) language,
 using only 8 characters.
 This inspired [JsFuck](https://en.wikipedia.org/wiki/JSFuck), a subset of Javascript using only 6 characters and executable in every Javascript interpreter.
-I was curious about PHP, and I found the [PhpFuck](https://github.com/splitline/PHPFuck) project, running with 7 characters.
+I was curious about PHP and found the [PhpFuck](https://github.com/splitline/PHPFuck) project, running with 7 characters.
 Unfortunately, it relies on [`create_function`](https://www.php.net/manual/en/function.create-function), deprecated in Php 7.2,
 and it produces a lot of warnings `Array to string conversion`.
 
@@ -17,11 +17,11 @@ program with a minimum number of characters.
 We will see some tricky parts of Php and I hope you'll have as much fun reading it as I had to code it!
 
 ## Rules
-Here some arbitrary rules that I fixed for this challenge:
+Here are some arbitrary rules that I fixed for this challenge:
 * Must work _out of the box_ with PHP 8.2 CLI.
 * No warnings, no notices... and forbidden to disable them!
 * Spaces, new lines, tabulations... even blank characters are counted
-* PHP tags are not part of the challenge, we can assume that the code will be used as below
+* PHP tags are not part of the challenge, we can assume that the code will be used as per below
 ```php
 <?php
 // <your code here>
@@ -30,7 +30,7 @@ Here some arbitrary rules that I fixed for this challenge:
 
 ## Basic: the `eval` approach
 [JsFuck](https://en.wikipedia.org/wiki/JSFuck) and [PhpFuck](https://github.com/splitline/PHPFuck) use the same concepts:
-* a way to create every possible strings
+* a way to create every possible string
 * a way to _execute_ a piece of code stored in a string. 
 
 The [`eval`](https://www.php.net/manual/en/function.eval) function is a good start, but note that it will already count for 6 characters:
@@ -43,7 +43,7 @@ allowing us to create a character from its single byte codepoint.
 Then, the remaining question is to know how to generate numbers from `0` to `255` (or `1` to `256`, since a [modulo is applied to the codepoint](https://www.php.net/manual/en/function.chr.php#refsect1-function.chr-parameters)).
 An intuitive way is to sum `1` to itself, as many times as needed: `1+1+1+1` is evaluated to `4`, using only 2 characters.
 
-Here we are now, we can reduce every PHP program to a valid PHP program using following characters:
+Here we are now, we can reduce every PHP program to a valid PHP program using the following characters:
 * `1` and `+` to create some integers/codepoints,
 * `(` and `)` to call a function (see below),
 * `c`, `h` and `r` to execute the [`chr`](https://www.php.net/manual/en/function.chr) function and to transform an integer into a character,
@@ -57,7 +57,7 @@ eval(chr(1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1
 ?>
 ```
 
-Now, every character that we want to remove will need an effort... brace yourself!
+Now, every character that we want to remove will need some effort... brace yourself!
 
 ## Callable and XOR
 PHP is a very _flexible_ language, especially for function calls.
@@ -80,12 +80,12 @@ we can find out these:
 * `'+'^'l'^'v'` produces `'1'` 
 
 That's it! We can produce the `'chr'` and `'1'` strings as soon as we include characters `'` and `^` in our set, we are saving 2 characters!
-Here's our new character's selection (as a string): `eval(.^'+)`, **10** characters.
+Here is our new character's selection (as a string): `eval(.^'+)`, **10** characters.
 
 This trick is heavily used in the original [PhpFuck](https://github.com/splitline/PHPFuck),
 but it's interesting to notice that they don't even need the `'`.
 It's because they are using  expression `[].[]` to produce the string `ArrayArray`, and then XOR some new characters from there.
-But this produces a warning, and this is excluded by our rules.
+But this syntax produces a warning, and then is excluded by our rules.
 
 If you're wondering why we don't try to use the same logic for the `eval` function, it's because it's impossible.
 `eval` is not a function, it's a [language construct](https://www.php.net/manual/en/function.eval.php#refsect1-function.eval-notes),
@@ -114,7 +114,7 @@ to an actual one. Fortunately, the XOR operator can help us to produces all nume
 Then, every positive integer can be produced as the concatenation of digits above,
 and PHP will take care of type conversion while calling `chr`.
 For example, `chr(42)` (`*` character) can be replaced by `chr(('.'^'l'^'v').('^'^'l'))`.
-It will also reduce the size of generated programs!
+It will also reduce the size of generated code!
 
 Here is new _Hello world_", generated with only **9 characters** (`eval().^'`):
 ```php
@@ -172,9 +172,9 @@ Our final _Hello World_ is a little heavy to be displayed here, but look at [thi
 
 ## Conclusion
 
-Of course, all of this is _useless_... Do NOT use it in production.
+Of course, all of this is _useless_... Do NOT use `PhpF**k` in production.
 But keep in mind that some nasty minds could try to send you some dirty PHP instructions, hidden in only 8 characters.
-Anyway, it was a fun challenge for me, I hope you enjoyed all those crispy details like I did.
+Anyway, it was a fun challenge for me, I hope you enjoyed all those juicy details like I did.
 
 If you're curious, I wrote some functions to transform any PHP code, in [this Github repository](https://github.com/b-viguier/PhpFk).
 It's also a good place if you want to [discuss it](https://github.com/b-viguier/PhpFk/discussions),
