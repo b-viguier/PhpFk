@@ -2,8 +2,6 @@
 layout: page
 ---
 
-# What is the minimum number of characters needed to run every possible program in Php?
-
 This is just the kind of question that I love: short, simple to understand... but damn challenging!
 This question already led to the creation of the [brainfuck](https://en.wikipedia.org/wiki/Brainfuck) language,
 using only 8 characters.
