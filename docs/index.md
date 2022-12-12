@@ -1,6 +1,8 @@
-# Php-F**k
+---
+layout: page
+---
 
-> What is the minimum number of characters needed to run every possible program in Php?
+# What is the minimum number of characters needed to run every possible program in Php?
 
 This is just the kind of question that I love: short, simple to understand... but damn challenging!
 This question already led to the creation of the [brainfuck](https://en.wikipedia.org/wiki/Brainfuck) language,
@@ -89,7 +91,7 @@ If you're wondering why we don't try to use the same logic for the `eval` functi
 `eval` is not a function, it's a [language construct](https://www.php.net/manual/en/function.eval.php#refsect1-function.eval-notes),
 meaning that we still have to deal with corresponding 4 characters for now.
 
-You can find our new _Hello world_ program [here](hello_world_10.php).
+You can find our new _Hello world_ program [here](hello_world_10.html).
 Sure, that's a long code to just write _"Hello World"_...
 Fortunately, the next trick will reduce the size of generated code.
  
@@ -165,7 +167,7 @@ Since we can produce `oCtDEC` string, we can use [`octdec` function](https://www
 to convert `'10'` and `'11'` from base 8 to `'8'` and `'9'` in base 10.
 
 That's it, we did it! **8 characters** to rewrite every PHP program: `[(,.^')]`.
-Our final _Hello World_ is a little heavy to be displayed here, but look at [this file](hello_world_10.php). 
+Our final _Hello World_ is a little heavy to be displayed here, but look at [this file](hello_world_8.html). 
 
 
 ## Conclusion
