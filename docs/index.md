@@ -166,14 +166,49 @@ The only downside is that we cannot directly generate characters `'8'` and `'9'`
 Since we can produce `oCtDEC` string, we can use [`octdec` function](https://www.php.net/manual/en/function.octdec)
 to convert `'10'` and `'11'` from base 8 to `'8'` and `'9'` in base 10.
 
+Also, it's important to note that, in contrary to `eval` function,
+this `FFI` trick cannot retrieve the value returned by the evaluated code.
+It means that we cannot generate a code similar to `echo "Hello World"; return 42;`...
+It's not so bad 😉.
+
 That's it, we did it! **8 characters** to rewrite every PHP program: `[(,.^')]`.
 Our final _Hello World_ is a little heavy to be displayed here, but look at [this file](hello_world_8.html). 
 
+Can we do better?
+
+## Using arrays without using brackets `[]`
+
+_Note: this paragraph has been added some weeks after the initial publication._
+
+If we look at it closely, we don't really need brackets to generate our initial set of characters `pqrstuvwXYZ`.
+The actual reason we keep them is to call the member function `zend_eval_string`,
+with the syntax `[$instance, 'method_name']()` (see previous section).
+Could we find another way to create this array?
+
+It's not possible to use the [variable functions syntax](https://www.php.net/manual/en/functions.variable-functions.php)
+with `array` (i.e `'array'()`) since it's also a language construct.
+But we can find some functions returning an array, especially [`array_merge`](https://www.php.net/manual/en/function.array-merge.php).
+Called without any parameter, `array_merge()` will return an empty array,
+and since it's an actual function we can write `'array_merge'()`.
+
+Although [`array_push`](https://www.php.net/manual/en/function.array-push.php) is a regular function,
+we can't use it to insert new values in our array, because it requires a reference to a variable...
+and we don't have variables since we did not include the `$` character in our set.
+Interestingly, most of the [array functions](https://www.php.net/manual/en/ref.array.php) take a reference to the array to modify.
+Fortunately, the [`array_pad` function](https://www.php.net/manual/en/function.array-pad.php)
+returns a copy of the input array, with some new elements. In our case, here is what we can do to create our target array:
+
+```php
+'array_pad'('array_pad'('array_merge'(),1,$ffi),2,'zend_eval_string')
+// Will be evaluated to [$ffi, 'zend_eval_string']
+```
+
+Done! We can finally write (generate) our [_Hello World_ with only 6 characters](hello_world_6.html), `(.,^')`.
 
 ## Conclusion
 
 Of course, all of this is _useless_... Do NOT use `PhpF**k` in production.
-But keep in mind that some nasty minds could try to send you some dirty PHP instructions, hidden in only 8 characters.
+But keep in mind that some nasty minds could try to send you some dirty PHP instructions, hidden in only 6 characters.
 Anyway, it was a fun challenge for me, I hope you enjoyed all those juicy details like I did.
 
 If you're curious, I wrote some functions to transform any PHP code, in [this Github repository](https://github.com/b-viguier/PhpFk).
