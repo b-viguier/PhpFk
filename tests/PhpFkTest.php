@@ -8,7 +8,7 @@ final class PhpFkTest extends TestCase
 {
     private function assertValidString(string $str): void
     {
-        $this->assertMatchesRegularExpression('/^[\[\],\(\).^\']*$/', $str);
+        $this->assertMatchesRegularExpression('/^[,\(\).^\']*$/', $str);
     }
 
     /**
@@ -58,24 +58,21 @@ final class PhpFkTest extends TestCase
     /**
      * @dataProvider codeProvider
      */
-    public function testObfuscateCode(string $code, $expectedResult, string $expectedOutput): void
+    public function testObfuscateCode(string $code, string $expectedOutput): void
     {
         $obfuscatedStr = PhpFk\obfuscateCode($code);
         $this->assertValidString($obfuscatedStr);
 
         $this->expectOutputString($expectedOutput);
-        $result = eval("$code;");
-
-        $this->assertSame($expectedResult, $result);
+        eval("$obfuscatedStr;");
     }
 
     public function codeProvider(): iterable
     {
-        yield 'Hello' => ['echo "Hello World"; return 0;', 0, 'Hello World'];
+        yield 'Hello' => ['echo "Hello World";', 'Hello World'];
 
         yield 'Class' => [
             'echo (new class() {public function __toString(): string {return "My Class";}});',
-            null,
             'My Class'
         ];
     }
