@@ -1,6 +1,6 @@
 # PhpF**k
 
-This repository contains some function to rewrite any Php code with only 6 characters `(,.^')`.
+This repository contains some functions to rewrite any Php code with only 6 characters `(,.^')`.
 Inspired from https://github.com/splitline/PHPFuck, but updated to work on PHP 8+.
 
 
