@@ -4,113 +4,82 @@ namespace bviguier\PhpFk;
 
 function obfuscateCode(string $code): string
 {
+    $array_merge = obfuscateString('array_merge');
+    $array_map = obfuscateString('array_map');
+    $json_decode = obfuscateString('json_decode');
+    $json_encode = obfuscateString('json_encode');
+
     return sprintf(
-        "(%s)((%s)((%s)(),%s,(%s)(%s)),%s,%s)(%s,%s,%s)",
-        obfuscateString('array_pad'),
-        obfuscateString('array_pad'),
-        obfuscateString('array_merge'),
-        obfuscatePositiveInteger(1),
-        obfuscateString('FFI::cdef'),
-        obfuscateString('char zend_eval_string(const char *, int, const char *);'),
-        obfuscatePositiveInteger(2),
-        obfuscateString('zend_eval_string'),
+        "($array_merge)(...($array_map)(...($json_decode)(%s)))(...($json_decode)(%s.(($json_encode)(%s)).%s))",
+        obfuscateString(
+            '["array_map",["FFI::cdef","strval"],[["char zend_eval_string(const char *, int, const char *);"],["zend_eval_string"]]]',
+        ),
+        obfuscateString('['),
         obfuscateString($code),
-        obfuscatePositiveInteger(0),
-        obfuscateString('')
+        obfuscateString(',0,""]'),
     );
 }
 
-const INITIAL_CHAR_MAP = [
-    '(' => "'('",
-    ')' => "')'",
-    '*' => "('.'^','^'(')",
-    '+' => "(')'^'.'^',')",
-    ',' => "','",
-    '-' => "(')'^','^'(')",
-    '.' => "'.'",
-    '/' => "(')'^'.'^'(')",
-    'X' => "('^'^'.'^'(')",
-    'Y' => "(')'^'^'^'.')",
-    'Z' => "('^'^','^'(')",
-    '[' => "(')'^'^'^',')",
-    '\\' => "('^'^'.'^',')",
-    ']' => "(')'^'^'^'.'^','^'(')",
-    '^' => "'^'",
-    '_' => "(')'^'^'^'(')",
-    'p' => "('^'^'.')",
-    'q' => "(')'^'^'^'.'^'(')",
-    'r' => "('^'^',')",
-    's' => "(')'^'^'^','^'(')",
-    't' => "('^'^'.'^','^'(')",
-    'u' => "(')'^'^'^'.'^',')",
-    'v' => "('^'^'(')",
-    'w' => "(')'^'^')",
-];
 
-const STRSTR = '(' . INITIAL_CHAR_MAP['s'] . '.' . INITIAL_CHAR_MAP['t'] . '.' . INITIAL_CHAR_MAP['r'] . '.' . INITIAL_CHAR_MAP['s'] . '.' . INITIAL_CHAR_MAP['t'] . '.' . INITIAL_CHAR_MAP['r'] . ')';
-const SQRT = '(' . INITIAL_CHAR_MAP['s'] . '.' . INITIAL_CHAR_MAP['q'] . '.' . INITIAL_CHAR_MAP['r'] . '.' . INITIAL_CHAR_MAP['t'] . ')';
-const _FALSE = STRSTR . "('','.')";
-const ZERO_INT = SQRT . '(' . _FALSE . ')';
-const ZERO_CHAR = '(' . ZERO_INT . ".'')";
+const INT_9 = '(9)';
+const INT_0 = '(9^9)';
+const STR_99 = '('.INT_9.'.'.INT_9.')';
+const INT_99 = '(99)';
+const STR_00 = '('.INT_0.'.'.INT_0.')';
+const INT_106 = '('.INT_9.'^'.INT_99.')';
+const STR_80 = '(('.INT_0.'.'.INT_9.')^('.INT_106.'.'.INT_9.')^'.STR_99.')';
+const INT_80 = '('.STR_80.'^'.INT_0.')';
+const INT_83 = '(9^('.INT_0.'^((9).('.INT_0.'))))';
+const INT_823 = '(9^('.INT_83.'.(9^9)))';
+const INT_861 = '(99^('.INT_83.'.(9^9)))';
+const STR_980 = '('.INT_9.'.'.STR_80.')';
+const INT_51 = '('.INT_99.'^'.INT_80.')';
+const INT_8 = '((('.INT_9.'.'.STR_80.')^('.INT_9.'.'.INT_0.')^'.STR_00.')^'.INT_0.')';
+const INT_1 = '(('.STR_99.'^'.STR_980.'^'.STR_00.')^'.INT_0.')';
+const INT_2 = '((('.INT_823.'.'.INT_9.')^('.INT_8.'.'.INT_0.')^'.STR_00.')^'.INT_0.')';
+const INT_3 = '(('.INT_83.'.'.INT_9.')^(('.INT_8.'.'.INT_0.')^'.STR_00.')^'.INT_0.')';
+const INT_4 = '((('.INT_9.'.'.INT_51.')^('.INT_9.'.'.INT_106.')^'.STR_00.')^'.INT_0.')';
+const INT_5 = '((('.INT_9.'.'.INT_51.')^('.INT_9.'.'.INT_0.')^'.STR_00.')^'.INT_0.')';
+const INT_6 = '((('.INT_861.'.'.INT_9.')^(('.INT_8.').'.INT_0.')^'.STR_00.')^'.INT_0.')';
+const INT_7 = '((('.INT_9.'.'.INT_6.')^('.INT_9.'.'.INT_1.')^('.INT_0.'.'.INT_0.'))^'.INT_0.')';
 
-const CHAR_MAP = INITIAL_CHAR_MAP + [
-        '0' => ZERO_CHAR,
-        '1' => '(' . ZERO_CHAR . "^')'^'(')",
-        '2' => '(' . ZERO_CHAR . "^'.'^',')",
-        '3' => '(' . ZERO_CHAR . "^')'^'.'^','^'(')",
-        '4' => '(' . ZERO_CHAR . "^','^'(')",
-        '5' => '(' . ZERO_CHAR . "^')'^',')",
-        '6' => '(' . ZERO_CHAR . "^'.'^'(')",
-        '7' => '(' . ZERO_CHAR . "^')'^'.')",
-        '@' => '(' . ZERO_CHAR . "^'^'^'.')",
-        'A' => '(' . ZERO_CHAR . "^')'^'^'^'.'^'(')",
-        'B' => '(' . ZERO_CHAR . "^'^'^',')",
-        'C' => '(' . ZERO_CHAR . "^')'^'^'^','^'(')",
-        'D' => '(' . ZERO_CHAR . "^'^'^'.'^','^'(')",
-        'E' => '(' . ZERO_CHAR . "^')'^'^'^'.'^',')",
-        'F' => '(' . ZERO_CHAR . "^'^'^'(')",
-        'G' => '(' . ZERO_CHAR . "^')'^'^')",
-        'h' => '(' . ZERO_CHAR . "^'^'^'.'^'(')",
-        'i' => '(' . ZERO_CHAR . "^')'^'^'^'.')",
-        'j' => '(' . ZERO_CHAR . "^'^'^','^'(')",
-        'k' => '(' . ZERO_CHAR . "^')'^'^'^',')",
-        'l' => '(' . ZERO_CHAR . "^'^'^'.'^',')",
-        'm' => '(' . ZERO_CHAR . "^')'^'^'^'.'^','^'(')",
-        'n' => '(' . ZERO_CHAR . "^'^')",
-        'o' => '(' . ZERO_CHAR . "^')'^'^'^'(')",
-    ];
+
+const STR_INF9 = '((999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999).(9))';
+const STR_NULL_NULL = '(((9).(9))^((9).(9)))';
+const STR_CHR = '('.STR_INF9.'^('.INT_8.'.'.INT_6.'.'.INT_4.')^('.INT_2.'.'.INT_0.'.'.STR_NULL_NULL.'))';
+
 
 function obfuscateString(string $str): string
 {
-    return '' === $str ? "''" : join(
+    return '' === $str ? '' : join(
         '.',
         array_map(
-            fn($char) => sprintf('(%s)',
-                CHAR_MAP[$char]
-                ?? sprintf('((%s).(%s).(%s))(%s)',
-                CHAR_MAP['C'],
-                CHAR_MAP['h'],
-                CHAR_MAP['r'],
-                obfuscatePositiveInteger(ord($char))
-            )
-            ),
-            str_split($str)
-        )
+            fn($char) => STR_CHR.obfuscatePositiveInteger(ord($char)),
+            str_split($str),
+        ),
     );
 }
 
 function obfuscatePositiveInteger(int $nb): string
 {
     assert($nb >= 0);
+
     return match ($nb) {
-        0, 1, 2, 3, 4, 5, 6, 7 => CHAR_MAP[$nb],
-        8, 9 => sprintf('((%s).(%s).(%s).(%s).(%s).(%s))(%s)',
-            CHAR_MAP['o'], CHAR_MAP['C'], CHAR_MAP['t'], CHAR_MAP['D'], CHAR_MAP['E'], CHAR_MAP['C'],
-            join('.', array_map(
-                    fn($digit) => sprintf('(%s)', CHAR_MAP[$digit]),
-                    str_split(decoct($nb)))
-            )
+        0 => INT_0,
+        1 => INT_1,
+        2 => INT_2,
+        3 => INT_3,
+        4 => INT_4,
+        5 => INT_5,
+        6 => INT_6,
+        7 => INT_7,
+        8 => INT_8,
+        9 => INT_9,
+
+        default => sprintf(
+            '((%s)^%s)',
+            join(').(', array_map(__FUNCTION__, str_split("$nb"))),
+            INT_0,
         ),
-        default => sprintf('(%s)', join(').(', array_map(__FUNCTION__, str_split("$nb")))),
     };
 }
