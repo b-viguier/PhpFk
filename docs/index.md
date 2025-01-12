@@ -215,3 +215,10 @@ If you're curious, I wrote some functions to transform any PHP code, in [this Gi
 It's also a good place if you want to [discuss it](https://github.com/b-viguier/PhpFk/discussions),
 ask questions... or even propose some new ideas.
 More information about me on [my website](https://b-viguier.github.io/).
+
+### Addendum
+I achieved to update the algorithm to use only 5 characters, despite I didn't update this article.
+To understand how, you can have a [look into the code](https://github.com/b-viguier/PhpFk),
+watch this [talk (in French)](https://afup.org/talks/4750-ecrire-du-php-avec-seulement-6-caracteres),
+or read [corresponding slides (in English)](https://b-viguier.github.io/downloads/talks/ForumPhp2024_6Characters.pdf).
+Here is an example, [_Hello World_ with only 5 characters](hello_world_5.html), `(.^9)`.
