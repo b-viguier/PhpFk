@@ -1,1 +1,5 @@
 /vendor/
+/_site/
+/.jekyll-cache/
+/.phpunit.result.cache
+/composer.lock

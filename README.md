@@ -22,5 +22,5 @@ php ./vendor/bin/phpunit ./tests
 
 ## Running Jekyll
 ```
-docker run --rm -it  --volume="$PWD:/srv/jekyll" -p 4000:4000 -p 35729:35729 jekyll/jekyll jekyll serve --livereload
+docker run --rm -it  --volume="$PWD:/srv/jekyll" -p 4000:4000 -p 35729:35729 jekyll/jekyll:3.8 jekyll serve --livereload
 ```
