@@ -4,15 +4,14 @@ namespace bviguier\PhpFk;
 
 function obfuscateCode(string $code): string
 {
-    $array_merge = obfuscateString('array_merge');
     $array_map = obfuscateString('array_map');
     $json_decode = obfuscateString('json_decode');
     $json_encode = obfuscateString('json_encode');
 
     return sprintf(
-        "($array_merge)(...($array_map)(...($json_decode)(%s)))(...($json_decode)(%s.(($json_encode)(%s)).%s))",
+        "(($array_map)(...($json_decode)(%s)))(...($json_decode)(%s.(($json_encode)(%s)).%s))",
         obfuscateString(
-            '["array_map",["FFI::cdef","strval"],[["char zend_eval_string(const char *, int, const char *);"],["zend_eval_string"]]]',
+            '["call_user_func",["FFI::cdef","strval"],["char zend_eval_string(const char*,int,const char*);","zend_eval_string"]]',
         ),
         obfuscateString('['),
         obfuscateString($code),
