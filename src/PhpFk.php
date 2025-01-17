@@ -11,7 +11,7 @@ function obfuscateCode(string $code): string
     return sprintf(
         "(($array_map)(...($json_decode)(%s)))(...($json_decode)(%s.(($json_encode)(%s)).%s))",
         obfuscateString(
-            '["call_user_func",["FFI::cdef","strval"],["char zend_eval_string(const char*,int,const char*);","zend_eval_string"]]',
+            '["call_user_func",["FFI::cdef","strval"],["enum{s,f}zend_eval_string(char*,intptr_t,char*);","zend_eval_string"]]',
         ),
         obfuscateString('['),
         obfuscateString($code),
