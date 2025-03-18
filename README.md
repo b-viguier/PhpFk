@@ -20,7 +20,10 @@ To run tests, you have first to `composer install` dependencies (PhpUnit).
 php ./vendor/bin/phpunit ./tests
 ```
 
-## Running Jekyll
-```
-docker run --rm -it  --volume="$PWD:/srv/jekyll" -p 4000:4000 -p 35729:35729 jekyll/jekyll:3.8 jekyll serve --livereload
+## Running Jekyll locally
+
+```bash
+cd docs
+docker build -t jekyll .
+docker run --rm -it --volume="$PWD:/srv/jekyll" -p 4000:4000 -p 35729:35729 jekyll serve --host 0.0.0.0 --livereload
 ```
