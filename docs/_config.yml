@@ -25,7 +25,6 @@ description: >- # this means to ignore newlines until "baseurl:"
   What is the minimum number of characters needed to run every possible program in Php?
 baseurl: "/PhpFk" # the subpath of your site, e.g. /blog
 url: "https://b-viguier.github.io" # the base hostname & protocol for your site, e.g. http://example.com
-twitter_username: b_viguier
 github_username:  b-viguier
 
 header_pages: [none]
