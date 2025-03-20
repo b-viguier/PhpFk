@@ -12,7 +12,13 @@ date: Mar. 17th, 2025
   margin-bottom: 0em;
   text-align: center;
 }
+
+.codeblock-label > code {
+  font-size: 0.8em;
+}
 </style>
+
+# Unlocking creativity: transforming an absurd coding challenge into a thorough exploration of trickiest PHP features.
 
 When imagining a bike, you might picture someone racing or enjoying a leisurely ride.
 However, another option to consider is BMX, which is great for performing stunts and freestyle tricks.
@@ -69,7 +75,7 @@ This function returns the character corresponding to the provided positive integ
 This is useful because positive integers can be represented using just 10 digits (0-9).
 Thus, the `"Hello World"` string can be represented using only 16 characters (`chr().0123456789`), and we can generate all possible strings accordingly.
 
-<p id="example-3" class="codeblock-label">Example 3: "Hello World" string written with <code>chr().0123456789</code> characters</p>
+<p id="example-3" class="codeblock-label">Example 3: <code>"Hello World"</code> string written with <code>chr().0123456789</code> characters</p>
 ```php
 "Hello World" === chr(72).chr(101).chr(108).chr(108).chr(111).chr(32).chr(87).chr(111).chr(114).chr(108).chr(100);
 ```
@@ -99,7 +105,7 @@ All strictly positive integers can be computed by adding 1 repeatedly; for examp
 Although we can't compute `0` this way, it’s not an issue for `chr()`, since the function applies an algorithm similar to modulo,
 meaning that `chr(0)` has the same result as `char(256)`.
 
-<p id="example-5" class="codeblock-label">Example 5: Expression producing an exclamation mark (`"!"`), using only 7 characters: `chr()1+`</p>
+<p id="example-5" class="codeblock-label">Example 5: Expression producing an exclamation mark (<code>"!"</code>), using only 7 characters: <code>chr()1+</code></p>
 ```php
 "!" === chr(1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1)
 ```
@@ -107,12 +113,12 @@ meaning that `chr(0)` has the same result as `char(256)`.
 So far, we have reduced our character count to 13 (`eval()chr.1+;`)  just by employing some simple math and carefully reviewing the documentation.
 As an aside, did you know that the last semicolon is optional as long as we use a closing tag? With that, we can cut down to 12 characters: `eval()chr.1+`.
 
+<p id="example-6" class="codeblock-label">Example 6: PHP "Hello World" without trailing comma</p>
 ```php
 <?php
 echo "Hello World"
 ?>
 ```
-<p id="example-6" class="codeblock-label">Example 6: PHP "Hello World" without trailing comma</p>
 
 ## Strings are functions
 
@@ -161,7 +167,7 @@ When a number exceeds what PHP can handle, the language represents it as the con
 We can produce `INF` by constructing a large number composed of a single digit repeated numerous times, such as a number made up of 309 nines.
 Concatenating a final nine to this `INF` value yields the string `"INF9"`, constructed solely from `9.^()`.
 
-<p id="example-9" class="codeblock-label">Example 9: String "INF9" produced from characters <code>9.()</code></p>
+<p id="example-9" class="codeblock-label">Example 9: String <code>"INF9"</code> produced from characters <code>9.()</code></p>
 ```php
 "INF9" === (999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999).(9)
 ```
@@ -171,7 +177,7 @@ These new characters enable us to create the `"CHr"` string (see [Example 10](#e
 It's worth noting that we are mixing upper and lower case, but this poses no problem for PHP; function names are not case-sensitive.
 
 
-<p id="example-10" class="codeblock-label">Example 10: String <code>"CHr"</code>code> created from intermediate strings</p>
+<p id="example-10" class="codeblock-label">Example 10: String <code>"CHr"</code> created from intermediate strings</p>
 ```php
 "CHr" === ("INF9" ^ "334" ^ "95\0")
 ```
@@ -242,7 +248,7 @@ enum{s,f} zend_eval_string(
 );
 ```
 
-Now, let's illustrate in [Example 13](#example-13) how we can evaluate some code without using `eval()`.
+Now, let's illustrate in [Example 13](#example-13) how we can evaluate some code without using `eval()`, thanks to [`FFI::cdef()`](https://www.php.net/manual/en/ffi.cdef.php).
 To obtain a `NULL` pointer, we use the string `"0"`, which PHP converts to `0` (int) through type juggling, and then to the `NULL` pointer by FFI.
 For the identifier parameter, we simply use an empty string.
 
@@ -266,7 +272,7 @@ We can further simplify this by leveraging variable functions and callable array
 ```
 
 As seen previously, all the strings used above can be generated from the characters `9.^()`.
-Additionally, we require the characters `[]`, to call the FFI function, which brings us down to just 8 characters: `9.^()[],`.
+Additionally, we require the characters `[],` to call the FFI function, which brings us down to just 8 characters: `9.^()[],`.
 
 ## Creating arrays from strings
 
@@ -315,7 +321,7 @@ Invoking `strval()` on a string will have no effect, which is exactly what we ne
 
 Once again, by using `json_decode()` and the spread operator (`...`) we can now write all our FFI logic with strings without needing the characters `[],`.
 
-<p id="example-18" class="codeblock-label">Example 18: "Hello World" that could be written only from strings and `().^` characters</p>
+<p id="example-18" class="codeblock-label">Example 18: "Hello World" that could be written only from strings and <code>().^</code> characters</p>
 ```php
 'array_map'(
     ...'json_decode'(
@@ -333,9 +339,9 @@ Once again, by using `json_decode()` and the spread operator (`...`) we can now 
 
 With this approach, we can express all possible strings and call the `eval()` function through FFI using just five characters!
 Consequently, our _"Hello World"_ program can be written with around 118K bytes of code, utilizing merely `9.^()` characters.
-A small excerpt is included below, but you can view the full code at [https://b-viguier.github.io/PhpFk/hello_world_5.html](https://b-viguier.github.io/PhpFk/hello_world_5.html).
+A small excerpt is included below, but you can view the full code [here](hello_world_5.html).
 
-<p id="example-19" class="codeblock-label">Example 19: <b>Excerpt</b> of the "Hello World" written only from `9.^()` characters</p>
+<p id="example-19" class="codeblock-label">Example 19: <b>Excerpt</b> of the "Hello World" written only from <code>9.^()</code> characters</p>
 ```php
 <?php
 ((((999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999).(9)^((9^99).(9)^((9).(9)^(9).(9))^(9)).((9^99)/*....*/(9)^((9).(9)^(9).(9))^(9)).((9^99).(9)^((9).(9)^(9).(9))^(9)).((9).(99^(((9^9).(9)^(9^99).(9)^(9).(9))^(9^9)))^(9).(9^99)^(9^9).(9^9)^(9^9))^(9).((999^(9).(9^9)).(9)^(9).(9^9)^(9^9).(9^9)^(9^9)).((9).(9)^(9).(9)))(((9)).(((9^99).(9)^((9).(9)^(9).(9))^(9)))^(9^9))))
@@ -344,10 +350,12 @@ A small excerpt is included below, but you can view the full code at [https://b-
 
 ## What have we done…
 At first sight, it’s remarkable that this type of program runs smoothly with a standard PHP interpreter.
-Initially, nothing suggests that this could be valid PHP code, yet here we are! Additionally, the performance overhead is minimal because PHP can pre-compute many of these constant expressions when generating opcodes.
+Initially, nothing suggests that this could be valid PHP code, yet here we are!
+Additionally, the performance overhead is minimal because PHP can pre-compute many of these constant expressions when generating opcodes.
 However, the memory footprint is quite large, as the engine must load and parse everything.
 Fortunately, the goal of this exercise was not to create production-ready code.
 Nonetheless, it's important to remember that some malicious users might attempt to send you valid PHP code written with unexpected characters.
 
 If you’re interested in implementation details, a tool is available that can convert your regular PHP code into this cryptic format: [PhpFk](https://github.com/b-viguier/PhpFk).
-The method presented here does not claim to be the most efficient or the least verbose, so feel free to suggest your own ideas! Although this exercise may seem pointless, I hope it illustrates how such silly constraints can help us maintain a creative mindset.
+The method presented here does not claim to be the most efficient or the least verbose, so feel free to suggest your own ideas!
+Although this exercise may seem pointless, I hope it illustrates how such silly constraints can help us maintain a creative mindset.
