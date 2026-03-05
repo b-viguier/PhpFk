@@ -277,11 +277,11 @@ Additionally, we require the characters `[],` to call the FFI function, which br
 ## Creating arrays from strings
 
 To remove the characters `[],`, we will utilize several approaches.
-Firstly, we can create arrays of scalar values by deserializing a JSON string using the [`json_decode()`](https://www.php.net/manual/en/function.json-encode.php) function. 
+Firstly, we can create arrays of scalar values by deserializing a JSON string using the [`json_decode()`](https://www.php.net/manual/en/function.json-decode.php) function. 
 
 <p id="example-15" class="codeblock-label">Example 15: Creating an array from a string</p>
 ```php
-json_decode('["echo \"Hello World\";", "0", ""]') === [
+json_decode('["echo \\"Hello World\\";", "0", ""]') === [
     'echo "Hello World";',
     '0',
     ''
